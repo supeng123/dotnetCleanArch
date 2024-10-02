@@ -68,6 +68,11 @@ dotnet ef migrations remove -p Infrastructure -s API
 
 dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations
 dotnet ef database update -p Infrastructure -s API -o Data/Migrations
+
+dotnet ef migrations add InitialCreate -p Identity -s API -o Data/Migrations -c Context
+dotnet ef database update -p Identity -s API -c Context
+
+dotnet ef migrations remove -p Identity -s API
 ```
 
 things need to be done
@@ -75,4 +80,5 @@ things need to be done
 1. introduce fluent validation
 2. add automapper
 3. add mediatr
-4. add identity
+4. [add identity](https://github.com/shayanvaghei/IdentityApp/tree/main)
+5. [add identity video](https://www.youtube.com/watch?v=sCWwHtZyVMg)

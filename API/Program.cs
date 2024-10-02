@@ -1,3 +1,5 @@
+using Identity;
+using Identity.Data;
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDataBaseServices(builder.Configuration);
+builder.Services.ConfigureIdentityServices(builder.Configuration);
 
 
 var app = builder.Build();
@@ -23,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -33,7 +36,9 @@ try
     var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<StoreContext>();
+    var identityContext = services.GetRequiredService<ContextSeedingService>();
     await context.Database.MigrateAsync();
+    await identityContext.InitializeContextAsync();
     await StoreContextSeed.SeedAsync(context);
 }
 catch (Exception ex)
