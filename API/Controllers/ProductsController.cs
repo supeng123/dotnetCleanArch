@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using API.Controllers.common;
 using Core.Interfaces.common;
@@ -13,7 +14,7 @@ namespace API.Controllers
     public class ProductsController(IUnitOfWork unit) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(
+        public async Task<ActionResult<IReadOnlyList<ComDefaultInterfaceAttribute>>> GetProducts(
             [FromQuery] ProductSpecParams specParams)
         {
             var spec = new ProductSpecification(specParams);

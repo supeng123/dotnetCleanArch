@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Repository;
+using MediatR;
+using System.Reflection;
 
 namespace Infrastructure
 {
@@ -21,6 +23,9 @@ namespace Infrastructure
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(ISpecification<>), typeof(BaseSpecification<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }
